@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Inter:wght@300;400;500&family=Share+Tech+Mono&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -10,12 +10,13 @@
   --color-bg: #f5f5f0;
   --color-surface: #ffffff;
   --color-dark: #111111;
-  --color-accent: #1a1a1a;
   --color-muted: #777;
   --color-border: #e0e0e0;
+  --color-accent: #111111;
+  --color-accent2: #5a4fcf;
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Inter', sans-serif;
-  --radius: 8px;
+  --font-mono: 'Share Tech Mono', monospace;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
 }
 
@@ -32,7 +33,7 @@ body {
   min-height: 100vh;
 }
 
-/* ─── HEADER ─── */
+/* ── HEADER ── */
 header {
   background-color: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
@@ -79,7 +80,7 @@ header {
   white-space: nowrap;
 }
 
-/* ─── MAIN ─── */
+/* ── MAIN ── */
 main {
   flex: 1;
   display: flex;
@@ -88,26 +89,21 @@ main {
   padding: 60px 40px;
 }
 
+/* ── CARD ── */
 .card {
   background: var(--color-surface);
   border-radius: 16px;
   box-shadow: var(--shadow);
   padding: 60px 80px;
   text-align: center;
-  max-width: 600px;
+  max-width: 620px;
   width: 100%;
   animation: fadeUp 0.7s ease both;
 }
 
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(28px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .greeting-label {
@@ -123,11 +119,11 @@ main {
 .greeting-text {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 56px;
+  font-size: 52px;
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--color-dark);
-  margin-bottom: 24px;
+  margin-bottom: 40px;
   animation: fadeUp 0.9s 0.15s ease both;
 }
 
@@ -141,14 +137,71 @@ main {
   to   { transform: scale(1);    opacity: 1; }
 }
 
-.greeting-sub {
-  font-size: 15px;
-  color: var(--color-muted);
-  line-height: 1.6;
-  animation: fadeUp 0.9s 0.3s ease both;
+/* ── CLOCK ── */
+.clock-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  animation: fadeUp 0.9s 0.35s ease both;
 }
 
-/* ─── FOOTER ─── */
+.clock-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #111;
+  border-radius: 14px;
+  padding: 20px 32px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.06),
+    0 8px 32px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+/* Each HH / MM / SS block */
+.clock-segment {
+  font-family: var(--font-mono);
+  font-size: 58px;
+  font-weight: 400;
+  color: #f0f0f0;
+  letter-spacing: 0.04em;
+  min-width: 2ch;
+  text-align: center;
+
+  /* Subtle glow on digit */
+  text-shadow: 0 0 18px rgba(140, 120, 255, 0.55);
+  transition: color 0.12s;
+}
+
+/* The blinking colons */
+.clock-colon {
+  font-family: var(--font-mono);
+  font-size: 54px;
+  color: var(--color-accent2);
+  opacity: 1;
+  line-height: 1;
+  padding-bottom: 4px;
+  animation: blink 1s step-end infinite;
+  text-shadow: 0 0 14px rgba(90, 79, 207, 0.7);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.15; }
+}
+
+/* Date line below clock */
+.clock-date {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  text-transform: capitalize;
+}
+
+/* ── FOOTER ── */
 footer {
   background-color: var(--color-surface);
   border-top: 1px solid var(--color-border);
@@ -160,30 +213,42 @@ footer {
   letter-spacing: 0.02em;
 }
 
-/* ─── RESPONSIVE ─── */
-@media (max-width: 600px) {
+/* ── RESPONSIVE ── */
+@media (max-width: 640px) {
   header {
-    padding: 0 20px;
+    padding: 14px 20px;
     height: auto;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-top: 14px;
-    padding-bottom: 14px;
+    flex-wrap: wrap;
     gap: 8px;
   }
 
   .header-title {
     position: static;
     transform: none;
-    font-size: 14px;
+    font-size: 13px;
+    white-space: normal;
     text-align: left;
+    width: 100%;
   }
 
   .card {
-    padding: 40px 24px;
+    padding: 40px 20px;
   }
 
   .greeting-text {
+    font-size: 38px;
+  }
+
+  .clock-segment {
     font-size: 40px;
+  }
+
+  .clock-colon {
+    font-size: 36px;
+  }
+
+  .clock-display {
+    padding: 16px 20px;
+    gap: 2px;
   }
 }
